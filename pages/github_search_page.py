@@ -1,4 +1,5 @@
 from playwright.sync_api import Page
+import re
 
 class GithubSearchPage:
     def __init__(self, page):
@@ -30,3 +31,7 @@ class GithubSearchPage:
         result_count_locator = self.result_count_locator
         result_count_locator.wait_for(state = "visible")
         return result_count_locator
+
+
+    def click_first_result(self, term):
+        self.page.get_by_role("link", name=re.compile(term, re.IGNORECASE)).first.click()
